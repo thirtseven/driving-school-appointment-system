@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>驾校学车预约管理系统</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-car"></i> 驾校预约管理系统
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#" onclick="showSection('dashboard')">
+                            <i class="fas fa-tachometer-alt"></i> 仪表盘
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('appointments')">
+                            <i class="fas fa-calendar-check"></i> 预约管理
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('courses')">
+                            <i class="fas fa-book"></i> 课程管理
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('students')">
+                            <i class="fas fa-users"></i> 学员管理
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="showSection('test')">
+                            <i class="fas fa-vial"></i> 自动化测试
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid mt-4">
+        <!-- Dashboard Section -->
+        <div id="dashboard" class="section active">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card bg-primary text-white mb-4">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">总预约数</h5>
+                                    <h2 id="totalAppointments">0</h2>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-calendar fa-2x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-success text-white mb-4">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">总收入</h5>
+                                    <h2 id="totalRevenue">¥0</h2>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-dollar-sign fa-2x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-warning text-white mb-4">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">课程种类</h5>
+                                    <h2>3</h2>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-book fa-2x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-info text-white mb-4">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">学员数量</h5>
+                                    <h2 id="totalStudents">0</h2>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-users fa-2x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-chart-pie"></i> 课程预约统计
+                        </div>
+                        <div class="card-body">
+                            <canvas id="courseChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-chart-bar"></i> 设计模式应用
+                        </div>
+                        <div class="card-body">
+                            <div class="list-group">
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="fas fa-circle text-primary"></i> 单例模式 - 预约管理中心
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="fas fa-circle text-success"></i> 工厂方法模式 - 课程创建
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="fas fa-circle text-warning"></i> 装饰器模式 - 增值服务
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="fas fa-circle text-info"></i> 策略模式 - 优惠计算
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="fas fa-circle text-danger"></i> 模板方法模式 - 预约流程
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action">
+                                    <i class="fas fa-circle text-secondary"></i> 观察者模式 - 通知系统
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Appointments Section -->
+        <div id="appointments" class="section">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span><i class="fas fa-calendar-check"></i> 预约列表</span>
+                    <button class="btn btn-primary btn-sm" onclick="showAddAppointmentModal()">
+                        <i class="fas fa-plus"></i> 新增预约
+                    </button>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>预约ID</th>
+                                <th>学员姓名</th>
+                                <th>课程</th>
+                                <th>练车时间</th>
+                                <th>费用</th>
+                                <th>状态</th>
+                            </tr>
+                        </thead>
+                        <tbody id="appointmentsTable">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Courses Section -->
+        <div id="courses" class="section">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-car"></i> 科目二基础
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">¥2800</h5>
+                            <p class="card-text">课时：12小时</p>
+                            <p class="card-text">内容：倒车入库、侧方停车、坡道定点起步、直角转弯、曲线行驶</p>
+                            <button class="btn btn-outline-primary btn-sm">详情</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-header bg-success text-white">
+                            <i class="fas fa-road"></i> 科目三上路
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">¥3200</h5>
+                            <p class="card-text">课时：16小时</p>
+                            <p class="card-text">内容：上车准备、模拟灯光、起步、直线行驶、加减挡位、变更车道、靠边停车</p>
+                            <button class="btn btn-outline-success btn-sm">详情</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <div class="card-header bg-warning text-white">
+                            <i class="fas fa-clipboard-check"></i> 模拟考试
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">¥500</h5>
+                            <p class="card-text">课时：2小时</p>
+                            <p class="card-text">内容：全真模拟考试环境，熟悉考试流程，提高考试通过率</p>
+                            <button class="btn btn-outline-warning btn-sm">详情</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-puzzle-piece"></i> 增值服务（装饰器模式）
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card border-info">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fas fa-map-marked-alt"></i> 考场模拟</h5>
+                                    <p class="card-text">真实考场环境模拟训练</p>
+                                    <span class="badge bg-info">+¥300</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card border-danger">
+                                <div class="card-body">
+                                    <h5 class="card-title"><i class="fas fa-bolt"></i> 考前冲刺辅导</h5>
+                                    <p class="card-text">考前重点强化训练</p>
+                                    <span class="badge bg-danger">+¥200</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Students Section -->
+        <div id="students" class="section">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-users"></i> 学员列表
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>学员ID</th>
+                                <th>姓名</th>
+                                <th>电话</th>
+                                <th>类型</th>
+                                <th>优惠策略</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsTable">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Test Section -->
+        <div id="test" class="section">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-vial"></i> CDP自动化测试
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <button class="btn btn-primary me-2" onclick="runCDPTest('page_load')">
+                                <i class="fas fa-play"></i> 页面加载测试
+                            </button>
+                            <button class="btn btn-success me-2" onclick="runCDPTest('api_test')">
+                                <i class="fas fa-play"></i> API接口测试
+                            </button>
+                            <button class="btn btn-warning me-2" onclick="runCDPTest('ui_test')">
+                                <i class="fas fa-play"></i> UI交互测试
+                            </button>
+                            <button class="btn btn-info me-2" onclick="runCDPTest('full_test')">
+                                <i class="fas fa-play"></i> 完整测试套件
+                            </button>
+                            <button class="btn btn-secondary" onclick="clearTestResults()">
+                                <i class="fas fa-trash"></i> 清除结果
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">测试结果</div>
+                                <div class="card-body">
+                                    <pre id="testResults" style="max-height: 400px; overflow-y: auto;">等待测试执行...</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

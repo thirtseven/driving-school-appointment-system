@@ -1,0 +1,16 @@
+{
+  "name": "driving-school-cdp-tests",
+  "version": "1.0.0",
+  "description": "CDP automated tests for Driving School Appointment System",
+  "main": "run_tests.js",
+  "scripts": {
+    "test": "node run_tests.js",
+    "test:verbose": "DEBUG=puppeteer:* node run_tests.js"
+  },
+  "dependencies": {
+    "puppeteer": "^21.0.0"
+  },
+  "keywords": ["cdp", "puppeteer", "testing", "driving-school"],
+  "author": "Driving School System",
+  "license": "MIT"
+}

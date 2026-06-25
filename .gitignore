@@ -1,0 +1,58 @@
+# Compiled class files
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Build directories
+bin/
+build/
+out/
+target/
+
+# IDE files
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+.settings/
+.classpath
+.project
+.factorypath
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node modules (CDP tests)
+cdp/node_modules/
+cdp/results/
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# Maven/Gradle
+.mvn/
+gradle/
+gradlew
+gradlew.bat
+
+# Nginx runtime
+nginx/logs/

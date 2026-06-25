@@ -1,0 +1,160 @@
+:root {
+    --primary-color: #0d6efd;
+    --success-color: #198754;
+    --warning-color: #ffc107;
+    --info-color: #0dcaf0;
+    --danger-color: #dc3545;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+}
+
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.3rem;
+}
+
+.navbar-brand i {
+    margin-right: 8px;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e3e6f0;
+    font-weight: 600;
+    color: #5a5c69;
+}
+
+.card-header i {
+    margin-right: 8px;
+}
+
+.card-title {
+    font-weight: 700;
+}
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #5a5c69;
+    border-bottom: 2px solid #e3e6f0;
+}
+
+.table td {
+    vertical-align: middle;
+}
+
+.badge {
+    font-size: 0.85rem;
+    padding: 0.5em 0.8em;
+}
+
+.btn {
+    border-radius: 0.35rem;
+}
+
+.card.border-info {
+    border-left: 4px solid var(--info-color) !important;
+}
+
+.card.border-danger {
+    border-left: 4px solid var(--danger-color) !important;
+}
+
+.list-group-item {
+    border-left: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.list-group-item:hover {
+    border-left-color: var(--primary-color);
+    background-color: #f8f9fa;
+}
+
+.list-group-item i {
+    margin-right: 10px;
+}
+
+#testResults {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+    padding: 15px;
+    border-radius: 5px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+#testResults .success {
+    color: #4ec9b0;
+}
+
+#testResults .error {
+    color: #f44747;
+}
+
+#testResults .info {
+    color: #569cd6;
+}
+
+#testResults .warning {
+    color: #cca700;
+}
+
+.status-badge {
+    padding: 0.4em 0.8em;
+    border-radius: 0.25rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-PENDING {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-CONFIRMED {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+.status-COMPLETED {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-CANCELLED {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+@media (max-width: 768px) {
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
+
+    .card-title h2 {
+        font-size: 1.5rem;
+    }
+}
