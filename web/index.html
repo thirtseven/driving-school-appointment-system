@@ -20,28 +20,23 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" href="#" onclick="showSection('dashboard')">
+                        <a class="nav-link active" href="#" onclick="showSection('dashboard', this)">
                             <i class="fas fa-tachometer-alt"></i> 仪表盘
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showSection('appointments')">
+                        <a class="nav-link" href="#" onclick="showSection('appointments', this)">
                             <i class="fas fa-calendar-check"></i> 预约管理
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showSection('courses')">
-                            <i class="fas fa-book"></i> 课程管理
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showSection('students')">
+                        <a class="nav-link" href="#" onclick="showSection('students', this)">
                             <i class="fas fa-users"></i> 学员管理
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" onclick="showSection('test')">
-                            <i class="fas fa-vial"></i> 自动化测试
+                        <a class="nav-link" href="#" onclick="showSection('courses', this)">
+                            <i class="fas fa-book"></i> 课程信息
                         </a>
                     </li>
                 </ul>
@@ -50,7 +45,6 @@
     </nav>
 
     <div class="container-fluid mt-4">
-        <!-- Dashboard Section -->
         <div id="dashboard" class="section active">
             <div class="row">
                 <div class="col-md-3">
@@ -114,56 +108,13 @@
                     </div>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <i class="fas fa-chart-pie"></i> 课程预约统计
-                        </div>
-                        <div class="card-body">
-                            <canvas id="courseChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card mb-4">
-                        <div class="card-header">
-                            <i class="fas fa-chart-bar"></i> 设计模式应用
-                        </div>
-                        <div class="card-body">
-                            <div class="list-group">
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    <i class="fas fa-circle text-primary"></i> 单例模式 - 预约管理中心
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    <i class="fas fa-circle text-success"></i> 工厂方法模式 - 课程创建
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    <i class="fas fa-circle text-warning"></i> 装饰器模式 - 增值服务
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    <i class="fas fa-circle text-info"></i> 策略模式 - 优惠计算
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    <i class="fas fa-circle text-danger"></i> 模板方法模式 - 预约流程
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    <i class="fas fa-circle text-secondary"></i> 观察者模式 - 通知系统
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
 
-        <!-- Appointments Section -->
         <div id="appointments" class="section">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
-                    <span><i class="fas fa-calendar-check"></i> 预约列表</span>
-                    <button class="btn btn-primary btn-sm" onclick="showAddAppointmentModal()">
+                    <span><i class="fas fa-calendar-check"></i> 预约管理</span>
+                    <button class="btn btn-primary btn-sm" onclick="showAppointmentModal()">
                         <i class="fas fa-plus"></i> 新增预约
                     </button>
                 </div>
@@ -172,11 +123,12 @@
                         <thead>
                             <tr>
                                 <th>预约ID</th>
-                                <th>学员姓名</th>
+                                <th>学员</th>
                                 <th>课程</th>
                                 <th>练车时间</th>
                                 <th>费用</th>
                                 <th>状态</th>
+                                <th>操作</th>
                             </tr>
                         </thead>
                         <tbody id="appointmentsTable">
@@ -186,7 +138,33 @@
             </div>
         </div>
 
-        <!-- Courses Section -->
+        <div id="students" class="section">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span><i class="fas fa-users"></i> 学员管理</span>
+                    <button class="btn btn-primary btn-sm" onclick="showStudentModal()">
+                        <i class="fas fa-plus"></i> 新增学员
+                    </button>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>学员ID</th>
+                                <th>姓名</th>
+                                <th>电话</th>
+                                <th>类型</th>
+                                <th>优惠</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsTable">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <div id="courses" class="section">
             <div class="row">
                 <div class="col-md-4">
@@ -198,7 +176,6 @@
                             <h5 class="card-title">¥2800</h5>
                             <p class="card-text">课时：12小时</p>
                             <p class="card-text">内容：倒车入库、侧方停车、坡道定点起步、直角转弯、曲线行驶</p>
-                            <button class="btn btn-outline-primary btn-sm">详情</button>
                         </div>
                     </div>
                 </div>
@@ -211,7 +188,6 @@
                             <h5 class="card-title">¥3200</h5>
                             <p class="card-text">课时：16小时</p>
                             <p class="card-text">内容：上车准备、模拟灯光、起步、直线行驶、加减挡位、变更车道、靠边停车</p>
-                            <button class="btn btn-outline-success btn-sm">详情</button>
                         </div>
                     </div>
                 </div>
@@ -224,12 +200,10 @@
                             <h5 class="card-title">¥500</h5>
                             <p class="card-text">课时：2小时</p>
                             <p class="card-text">内容：全真模拟考试环境，熟悉考试流程，提高考试通过率</p>
-                            <button class="btn btn-outline-warning btn-sm">详情</button>
                         </div>
                     </div>
                 </div>
             </div>
-
             <div class="card">
                 <div class="card-header">
                     <i class="fas fa-puzzle-piece"></i> 增值服务（装饰器模式）
@@ -258,74 +232,155 @@
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Students Section -->
-        <div id="students" class="section">
-            <div class="card">
-                <div class="card-header">
-                    <i class="fas fa-users"></i> 学员列表
+    <div class="modal fade" id="appointmentModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="appointmentModalTitle">新增预约</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="card-body">
-                    <table class="table table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>学员ID</th>
-                                <th>姓名</th>
-                                <th>电话</th>
-                                <th>类型</th>
-                                <th>优惠策略</th>
-                            </tr>
-                        </thead>
-                        <tbody id="studentsTable">
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- Test Section -->
-        <div id="test" class="section">
-            <div class="card">
-                <div class="card-header">
-                    <i class="fas fa-vial"></i> CDP自动化测试
-                </div>
-                <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-md-12">
-                            <button class="btn btn-primary me-2" onclick="runCDPTest('page_load')">
-                                <i class="fas fa-play"></i> 页面加载测试
-                            </button>
-                            <button class="btn btn-success me-2" onclick="runCDPTest('api_test')">
-                                <i class="fas fa-play"></i> API接口测试
-                            </button>
-                            <button class="btn btn-warning me-2" onclick="runCDPTest('ui_test')">
-                                <i class="fas fa-play"></i> UI交互测试
-                            </button>
-                            <button class="btn btn-info me-2" onclick="runCDPTest('full_test')">
-                                <i class="fas fa-play"></i> 完整测试套件
-                            </button>
-                            <button class="btn btn-secondary" onclick="clearTestResults()">
-                                <i class="fas fa-trash"></i> 清除结果
-                            </button>
+                <div class="modal-body">
+                    <form id="appointmentForm">
+                        <input type="hidden" id="appointmentId">
+                        <div class="mb-3">
+                            <label class="form-label">选择学员</label>
+                            <select class="form-select" id="appointmentStudent" required>
+                                <option value="">请选择学员</option>
+                            </select>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="card">
-                                <div class="card-header">测试结果</div>
-                                <div class="card-body">
-                                    <pre id="testResults" style="max-height: 400px; overflow-y: auto;">等待测试执行...</pre>
-                                </div>
+                        <div class="mb-3">
+                            <label class="form-label">课程类型</label>
+                            <select class="form-select" id="appointmentCourse" required>
+                                <option value="SUBJECT_2">科目二基础 (¥2800)</option>
+                                <option value="SUBJECT_3">科目三上路 (¥3200)</option>
+                                <option value="MOCK_EXAM">模拟考试 (¥500)</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">练车时间</label>
+                            <input type="datetime-local" class="form-control" id="appointmentTime" required>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="withSimulation">
+                                <label class="form-check-label" for="withSimulation">
+                                    考场模拟 (+¥300)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="withCoaching">
+                                <label class="form-check-label" for="withCoaching">
+                                    考前冲刺辅导 (+¥200)
+                                </label>
                             </div>
                         </div>
-                    </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="saveAppointment()">保存</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="modal fade" id="studentModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="studentModalTitle">新增学员</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="studentForm">
+                        <input type="hidden" id="studentId">
+                        <div class="mb-3">
+                            <label class="form-label">姓名</label>
+                            <input type="text" class="form-control" id="studentName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">电话</label>
+                            <input type="tel" class="form-control" id="studentPhone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">学员类型</label>
+                            <select class="form-select" id="studentType" required>
+                                <option value="REGULAR">普通学员 (原价)</option>
+                                <option value="STUDENT">学生学员 (8折)</option>
+                                <option value="GROUP">团体学员 (7折)</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="saveStudent()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="statusModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">更新预约状态</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="statusAppointmentId">
+                    <div class="mb-3">
+                        <label class="form-label">选择新状态</label>
+                        <select class="form-select" id="newStatus">
+                            <option value="PENDING">待确认</option>
+                            <option value="CONFIRMED">已确认</option>
+                            <option value="COMPLETED">已完成</option>
+                            <option value="CANCELLED">已取消</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" onclick="updateAppointmentStatus()">更新</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">确认删除</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>确定要删除此记录吗？此操作不可撤销。</p>
+                    <input type="hidden" id="deleteId">
+                    <input type="hidden" id="deleteType">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-danger" onclick="confirmDelete()">删除</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toast" class="toast" role="alert">
+            <div class="toast-header">
+                <strong class="me-auto" id="toastTitle">通知</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+            </div>
+            <div class="toast-body" id="toastMessage">
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>

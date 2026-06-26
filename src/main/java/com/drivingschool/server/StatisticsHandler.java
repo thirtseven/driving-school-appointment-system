@@ -1,7 +1,6 @@
 package com.drivingschool.server;
 
 import com.drivingschool.model.Appointment;
-import com.drivingschool.singleton.AppointmentManager;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
@@ -12,36 +11,28 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class StatisticsHandler implements HttpHandler {
-    private final AppointmentManager manager = AppointmentManager.getInstance();
+    private final DataStore dataStore = DataStore.getInstance();
 
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         String method = exchange.getRequestMethod();
-        String response;
-        int statusCode;
-
+        
         setCorsHeaders(exchange);
 
         if ("OPTIONS".equals(method)) {
-            statusCode = 204;
-            response = "";
-        } else if ("GET".equals(method)) {
-            statusCode = 200;
-            response = getStatisticsJson();
-        } else {
-            statusCode = 405;
-            response = "{\"error\": \"Method not allowed\"}";
+            sendResponse(exchange, 204, "");
+            return;
         }
 
-        exchange.getResponseHeaders().set("Content-Type", "application/json; charset=UTF-8");
-        exchange.sendResponseHeaders(statusCode, response.getBytes(StandardCharsets.UTF_8).length);
-        OutputStream os = exchange.getResponseBody();
-        os.write(response.getBytes(StandardCharsets.UTF_8));
-        os.close();
+        if ("GET".equals(method)) {
+            sendResponse(exchange, 200, getStatisticsJson());
+        } else {
+            sendResponse(exchange, 405, "{\"error\": \"Method not allowed\"}");
+        }
     }
 
     private String getStatisticsJson() {
-        var appointments = manager.getAllAppointments();
+        var appointments = dataStore.getAllAppointments();
 
         int totalAppointments = appointments.size();
         double totalRevenue = appointments.stream().mapToDouble(Appointment::getFinalPrice).sum();
@@ -55,6 +46,7 @@ public class StatisticsHandler implements HttpHandler {
         StringBuilder json = new StringBuilder();
         json.append("{");
         json.append("\"totalAppointments\": ").append(totalAppointments).append(",");
+        json.append("\"totalStudents\": ").append(dataStore.getStudentCount()).append(",");
         json.append("\"totalRevenue\": ").append(String.format("%.2f", totalRevenue)).append(",");
         json.append("\"courseStats\": {");
         int i = 0;
@@ -80,5 +72,13 @@ public class StatisticsHandler implements HttpHandler {
         exchange.getResponseHeaders().set("Access-Control-Allow-Origin", "*");
         exchange.getResponseHeaders().set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         exchange.getResponseHeaders().set("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    }
+
+    private void sendResponse(HttpExchange exchange, int statusCode, String response) throws IOException {
+        exchange.getResponseHeaders().set("Content-Type", "application/json; charset=UTF-8");
+        exchange.sendResponseHeaders(statusCode, response.getBytes(StandardCharsets.UTF_8).length);
+        OutputStream os = exchange.getResponseBody();
+        os.write(response.getBytes(StandardCharsets.UTF_8));
+        os.close();
     }
 }
